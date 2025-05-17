@@ -272,12 +272,6 @@ namespace IPCameraViewer
 			button_Connect.Enabled = false;
 			btnConnect2.Enabled = false;
 			timer1_Tick(new object(), new EventArgs());
-/*
-			btnConnect2_Click(new object(), new EventArgs());
-            button_VideoRecording_Click(new object(), new EventArgs());
-			button_Connect_Click(new object(), new EventArgs());
-			btnRecord2_Click(new object(), new EventArgs());
-*/
 		}
 
 		private void btnStopTimer_Click(object sender, EventArgs e)
