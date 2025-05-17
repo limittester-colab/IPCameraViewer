@@ -36,6 +36,9 @@ namespace IPCameraViewer
             VLCPlayer.Audio.Volume = 69; // 0 is min, 100 is max
             // You can force aspect ratio...
             VLCPlayer.Video.AspectRatio = "16:9"; // 4:3 , 0:0 ...
+			btnStartTimer.Enabled = true;
+			btnStopTimer.Enabled = false;
+
         }
 
         public void CheckIfInstalled()
@@ -229,26 +232,67 @@ namespace IPCameraViewer
 		private void timer1_Tick(object sender, EventArgs e)
 		{
             tbStatus.Text = interval.ToString();
+			VLCPlayer.Stop();
+			string path1 = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
+			var mediaOptions1 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path1 + "\"}" };
+			VLCPlayer.SetMedia(new Uri(input_RTSP.Text), mediaOptions1);
+			VLCPlayer.Play();
+			IsRecording1 = true;
+
+			VLCPlayer2.Stop();
+			string path2 = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
+			var mediaOptions2 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path2 + "\"}" };
+			VLCPlayer2.SetMedia(new Uri(inputRTSP2.Text), mediaOptions2);
+			VLCPlayer2.Play();
+			IsRecording2 = true;
 		}
 
 		private void StartTimer(object sender, EventArgs e)
 		{
+			btnStartTimer.Enabled = false;
+			btnStopTimer.Enabled = true;
+            btnRecord2.Enabled = false;
+            button_VideoRecording.Enabled = false;
             timer1.Enabled = true;
             tbStatus.Text = "start";
+			button_Connect.Enabled = false;
+			btnConnect2.Enabled = false;
+
+            VLCPlayer.Stop();
+			string path1 = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
+			var mediaOptions1 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path1 + "\"}" };
+			VLCPlayer.SetMedia(new Uri(input_RTSP.Text), mediaOptions1);
+			VLCPlayer.Play();
+			IsRecording1 = true;
+
+			VLCPlayer2.Stop();
+			string path2 = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
+			var mediaOptions2 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path2 + "\"}" };
+			VLCPlayer2.SetMedia(new Uri(inputRTSP2.Text), mediaOptions2);
+			VLCPlayer2.Play();
+			IsRecording2 = true;
+/*
 			btnConnect2_Click(new object(), new EventArgs());
             button_VideoRecording_Click(new object(), new EventArgs());
 			button_Connect_Click(new object(), new EventArgs());
 			btnRecord2_Click(new object(), new EventArgs());
+*/
 		}
 
 		private void btnStopTimer_Click(object sender, EventArgs e)
 		{
+			btnStartTimer.Enabled = true;
+			btnStopTimer.Enabled = false;
 			timer1.Enabled = false;
 			tbStatus.Text = "stop";
 			VLCPlayer2.Stop();
 			VLCPlayer.Stop();
 			IsRecording1 = false;
 			IsRecording2 = false;
+			btnRecord2.Enabled = true;
+            button_VideoRecording.Enabled = true;
+			button_Connect.Enabled = true;
+			btnConnect2.Enabled = true;
 		}
 	}
 }
