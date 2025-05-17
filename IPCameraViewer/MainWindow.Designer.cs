@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
 			this.VLCPlayer = new Vlc.DotNet.Forms.VlcControl();
 			this.input_RTSP = new System.Windows.Forms.TextBox();
@@ -43,6 +44,10 @@
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.inputRTSP2 = new System.Windows.Forms.TextBox();
 			this.btnConnect2 = new System.Windows.Forms.Button();
+			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.tbStatus = new System.Windows.Forms.TextBox();
+			this.btnStartTimer = new System.Windows.Forms.Button();
+			this.btnStopTimer = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.VLCPlayer)).BeginInit();
 			this.groupbox_rtsp.SuspendLayout();
 			this.groupbox_Actions.SuspendLayout();
@@ -214,11 +219,46 @@
 			this.btnConnect2.UseVisualStyleBackColor = false;
 			this.btnConnect2.Click += new System.EventHandler(this.btnConnect2_Click);
 			// 
+			// timer1
+			// 
+			this.timer1.Interval = 30000;
+			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			// 
+			// tbStatus
+			// 
+			this.tbStatus.Location = new System.Drawing.Point(34, 527);
+			this.tbStatus.Name = "tbStatus";
+			this.tbStatus.Size = new System.Drawing.Size(523, 20);
+			this.tbStatus.TabIndex = 9;
+			// 
+			// btnStartTimer
+			// 
+			this.btnStartTimer.Location = new System.Drawing.Point(594, 524);
+			this.btnStartTimer.Name = "btnStartTimer";
+			this.btnStartTimer.Size = new System.Drawing.Size(75, 23);
+			this.btnStartTimer.TabIndex = 10;
+			this.btnStartTimer.Text = "Start Timer";
+			this.btnStartTimer.UseVisualStyleBackColor = true;
+			this.btnStartTimer.Click += new System.EventHandler(this.StartTimer);
+			// 
+			// btnStopTimer
+			// 
+			this.btnStopTimer.Location = new System.Drawing.Point(692, 524);
+			this.btnStopTimer.Name = "btnStopTimer";
+			this.btnStopTimer.Size = new System.Drawing.Size(75, 23);
+			this.btnStopTimer.TabIndex = 11;
+			this.btnStopTimer.Text = "Stop Timer";
+			this.btnStopTimer.UseVisualStyleBackColor = true;
+			this.btnStopTimer.Click += new System.EventHandler(this.btnStopTimer_Click);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(854, 506);
+			this.ClientSize = new System.Drawing.Size(854, 571);
+			this.Controls.Add(this.btnStopTimer);
+			this.Controls.Add(this.btnStartTimer);
+			this.Controls.Add(this.tbStatus);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.VLCPlayer2);
@@ -243,6 +283,7 @@
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
@@ -262,6 +303,10 @@
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.TextBox inputRTSP2;
 		private System.Windows.Forms.Button btnConnect2;
+		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.TextBox tbStatus;
+		private System.Windows.Forms.Button btnStartTimer;
+		private System.Windows.Forms.Button btnStopTimer;
 	}
 }
 

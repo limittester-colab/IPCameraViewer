@@ -139,7 +139,8 @@ namespace IPCameraViewer
                         // Note: You have to use double backslash, otherways this bad ass bitch doesn't work.
 
                         //string path = $@"c:\\Users\\{Environment.UserName}\\Desktop\\{Guid.NewGuid()}.mp4";
-                        string path = $@"c:\\Users\\Daniel\\Recordings\\Video_{Guid.NewGuid()}.mp4";
+                        //string path = $@"c:\\Users\\Daniel\\Recordings\\Video_{Guid.NewGuid()}.mp4";
+						string path = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
 						// Magic option string that creates recording:
 						var mediaOptions = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path + "\"}" };
                         VLCPlayer.SetMedia(new Uri(input_RTSP.Text), mediaOptions);
@@ -188,7 +189,9 @@ namespace IPCameraViewer
                         // Note: You have to use double backslash, otherways this bad ass bitch doesn't work.
 
                         //string path = $@"c:\\Users\\{Environment.UserName}\\Desktop\\{Guid.NewGuid()}.mp4";
-                        string path = $@"c:\\Users\\Daniel\\Recordings\\Video_{Guid.NewGuid()}.mp4";
+                        //string path = $@"c:\\Users\\Daniel\\Recordings\\Video_{Guid.NewGuid()}.mp4";
+						string path = $@"c:\\Users\\Daniel\\Recordings\\Video2_{interval++}.mp4";
+						
 						// Magic option string that creates recording:
 						var mediaOptions = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path + "\"}" };
                         VLCPlayer2.SetMedia(new Uri(inputRTSP2.Text), mediaOptions);
@@ -219,6 +222,33 @@ namespace IPCameraViewer
                 btnRecord2.BackColor = Color.LemonChiffon;
                 //MessageBox.Show("Video record is successfully saved on your desktop!", "Video record", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+		}
+
+		int interval = 0;
+
+		private void timer1_Tick(object sender, EventArgs e)
+		{
+            tbStatus.Text = interval.ToString();
+		}
+
+		private void StartTimer(object sender, EventArgs e)
+		{
+            timer1.Enabled = true;
+            tbStatus.Text = "start";
+			btnConnect2_Click(new object(), new EventArgs());
+            button_VideoRecording_Click(new object(), new EventArgs());
+			button_Connect_Click(new object(), new EventArgs());
+			btnRecord2_Click(new object(), new EventArgs());
+		}
+
+		private void btnStopTimer_Click(object sender, EventArgs e)
+		{
+			timer1.Enabled = false;
+			tbStatus.Text = "stop";
+			VLCPlayer2.Stop();
+			VLCPlayer.Stop();
+			IsRecording1 = false;
+			IsRecording2 = false;
 		}
 	}
 }
