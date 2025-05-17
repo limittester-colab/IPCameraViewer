@@ -19,21 +19,13 @@ namespace IPCameraViewer
         private int second;
         private int day, month;
 		private DateTime now;
+		private int interval = 0;
+        private string directory = "f:\\\\Recordings\\\\";
+        private bool running = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            // For testing you can use my demo IP camera RTSP stream:
-            // rtsp://stream.szep.cz/user=test_password=test_channel=1_stream=1
-            // Remember that you must have VLC Media Player already installed on computer where you want to execute
-            // this application. All VLC Controls needs to use vlclib.dll located in VLC installation folder, in my
-            // case 'C:\Program Files (x86)\VideoLAN\VLC'. Path must be always set in 'VLCLibDirectory' property
-            // (you can easily set this property in designer). In this project, 'VLCLibDirectory' is already set.
-            // If you want to use VLCControl in your own project, you must install NuGet package 'VLC.DotNet.Forms'.
-            // 1. Project > Manage NuGet Packages > Browse > Type 'VLC.DotNet.Forms' > Install
-            // 2. Designer > Toolbox > VLCControl > drop VLCControl somewhere into your form
-            // This method checks if you have installed VLC Media Player 32 bit on your computer.
-            // If not, it will direct you to download VLC setup.
             CheckIfInstalled();
             // Optional settings example:
             // You can mute the audio...
@@ -45,6 +37,7 @@ namespace IPCameraViewer
             VLCPlayer.Video.AspectRatio = "16:9"; // 4:3 , 0:0 ...
 			btnStartTimer.Enabled = true;
 			btnStopTimer.Enabled = false;
+            run_label.ForeColor = Color.White;
 
         }
 
@@ -52,6 +45,7 @@ namespace IPCameraViewer
         {
             if (!File.Exists("C:\\Program Files\\VideoLAN\\VLC\\libvlc.dll"))
             {
+/*
                 DialogResult dialogResult = MessageBox.Show("VLC installation was not detected. Do you want to install VLC now?", "VLC is missing", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (dialogResult == DialogResult.Yes)
@@ -64,6 +58,10 @@ namespace IPCameraViewer
                     MessageBox.Show("Application can't work without VLC installed.", "Bye", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Process.GetCurrentProcess().Kill();
                 }
+*/
+				MessageBox.Show("Application can't work without VLC installed.", "Bye", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				Process.GetCurrentProcess().Kill();
+
             }
         }
 
@@ -234,8 +232,6 @@ namespace IPCameraViewer
             }
 		}
 
-		int interval = 0;
-
 		private void timer1_Tick(object sender, EventArgs e)
 		{
 			
@@ -246,20 +242,23 @@ namespace IPCameraViewer
             day = now.Day;
             month = now.Month;
 			string str = String.Format("{0,-2}-{1,-2}-{2,-2}-{3,-2}-{4,-2}",month,day,hour,minute,second);
-            tbStatus.Text = str;
+            //tbStatus.Text = interval.ToString() + " " + str;
 			VLCPlayer.Stop();
-			string path1 = $@"f:\\Recordings\\Video1_" + str + ".mp4";
+			//string path1 = $"f:\\Recordings\\Video1_" + str + ".mp4";
+            string path1 = directory + "Video1_" + str + ".mp4";
+            tbStatus.Text = path1;
 			var mediaOptions1 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path1 + "\"}" };
 			VLCPlayer.SetMedia(new Uri(input_RTSP.Text), mediaOptions1);
 			VLCPlayer.Play();
 			IsRecording1 = true;
 
 			VLCPlayer2.Stop();
-			string path2 = $@"f:\\Recordings\\Video2_" + str + ".mp4";
+            string path2 = directory + "Video2_" + str + ".mp4";
 			var mediaOptions2 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path2 + "\"}" };
 			VLCPlayer2.SetMedia(new Uri(inputRTSP2.Text), mediaOptions2);
 			VLCPlayer2.Play();
 			IsRecording2 = true;
+			interval++;
 		}
 
 		private void StartTimer(object sender, EventArgs e)
@@ -272,6 +271,36 @@ namespace IPCameraViewer
 			button_Connect.Enabled = false;
 			btnConnect2.Enabled = false;
 			timer1_Tick(new object(), new EventArgs());
+            btnSetTimeDelay.Enabled = false;
+            btnSetDirectory.Enabled = false;
+            timer2.Enabled = true;
+		}
+
+		private void btnSetDirectory_Click(object sender, EventArgs e)
+		{
+			directory = tbDirectory.Text;
+            tbStatus.Text = directory;
+		}
+
+		private void btnSetTimeDelay_Click(object sender, EventArgs e)
+		{
+            timer1.Interval = Convert.ToInt32(tbTimeDelay.Text) * 1000;
+            tbStatus.Text = timer1.Interval.ToString();
+		}
+
+		private void timer2_int(object sender, EventArgs e)
+		{
+            if(running)
+            {
+                running = false;
+				run_label.ForeColor = Color.White;
+			}
+			else
+            {
+                running = true;
+                run_label.ForeColor = Color.Red;
+			}
+
 		}
 
 		private void btnStopTimer_Click(object sender, EventArgs e)
@@ -287,6 +316,10 @@ namespace IPCameraViewer
             button_VideoRecording.Enabled = true;
 			button_Connect.Enabled = true;
 			btnConnect2.Enabled = true;
+			btnSetTimeDelay.Enabled = true;
+			btnSetDirectory.Enabled = true;
+			timer2.Enabled = false;
+			run_label.ForeColor = Color.White;
 		}
 	}
 }

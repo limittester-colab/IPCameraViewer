@@ -48,6 +48,12 @@
 			this.tbStatus = new System.Windows.Forms.TextBox();
 			this.btnStartTimer = new System.Windows.Forms.Button();
 			this.btnStopTimer = new System.Windows.Forms.Button();
+			this.btnSetDirectory = new System.Windows.Forms.Button();
+			this.tbDirectory = new System.Windows.Forms.TextBox();
+			this.tbTimeDelay = new System.Windows.Forms.TextBox();
+			this.btnSetTimeDelay = new System.Windows.Forms.Button();
+			this.timer2 = new System.Windows.Forms.Timer(this.components);
+			this.run_label = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.VLCPlayer)).BeginInit();
 			this.groupbox_rtsp.SuspendLayout();
 			this.groupbox_Actions.SuspendLayout();
@@ -59,6 +65,7 @@
 			// VLCPlayer
 			// 
 			this.VLCPlayer.BackColor = System.Drawing.Color.Black;
+			this.VLCPlayer.ImeMode = System.Windows.Forms.ImeMode.On;
 			this.VLCPlayer.Location = new System.Drawing.Point(21, 23);
 			this.VLCPlayer.Name = "VLCPlayer";
 			this.VLCPlayer.Size = new System.Drawing.Size(748, 426);
@@ -221,19 +228,19 @@
 			// 
 			// timer1
 			// 
-			this.timer1.Interval = 59000;
+			this.timer1.Interval = 60000;
 			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// tbStatus
 			// 
-			this.tbStatus.Location = new System.Drawing.Point(12, 537);
+			this.tbStatus.Location = new System.Drawing.Point(12, 540);
 			this.tbStatus.Name = "tbStatus";
-			this.tbStatus.Size = new System.Drawing.Size(179, 20);
+			this.tbStatus.Size = new System.Drawing.Size(285, 20);
 			this.tbStatus.TabIndex = 9;
 			// 
 			// btnStartTimer
 			// 
-			this.btnStartTimer.Location = new System.Drawing.Point(206, 537);
+			this.btnStartTimer.Location = new System.Drawing.Point(325, 539);
 			this.btnStartTimer.Name = "btnStartTimer";
 			this.btnStartTimer.Size = new System.Drawing.Size(75, 23);
 			this.btnStartTimer.TabIndex = 10;
@@ -243,7 +250,7 @@
 			// 
 			// btnStopTimer
 			// 
-			this.btnStopTimer.Location = new System.Drawing.Point(287, 537);
+			this.btnStopTimer.Location = new System.Drawing.Point(406, 539);
 			this.btnStopTimer.Name = "btnStopTimer";
 			this.btnStopTimer.Size = new System.Drawing.Size(75, 23);
 			this.btnStopTimer.TabIndex = 11;
@@ -251,11 +258,64 @@
 			this.btnStopTimer.UseVisualStyleBackColor = true;
 			this.btnStopTimer.Click += new System.EventHandler(this.btnStopTimer_Click);
 			// 
+			// btnSetDirectory
+			// 
+			this.btnSetDirectory.Location = new System.Drawing.Point(842, 540);
+			this.btnSetDirectory.Name = "btnSetDirectory";
+			this.btnSetDirectory.Size = new System.Drawing.Size(83, 23);
+			this.btnSetDirectory.TabIndex = 12;
+			this.btnSetDirectory.Text = "Set Directory";
+			this.btnSetDirectory.UseVisualStyleBackColor = true;
+			this.btnSetDirectory.Click += new System.EventHandler(this.btnSetDirectory_Click);
+			// 
+			// tbDirectory
+			// 
+			this.tbDirectory.Location = new System.Drawing.Point(596, 542);
+			this.tbDirectory.Name = "tbDirectory";
+			this.tbDirectory.Size = new System.Drawing.Size(231, 20);
+			this.tbDirectory.TabIndex = 13;
+			// 
+			// tbTimeDelay
+			// 
+			this.tbTimeDelay.Location = new System.Drawing.Point(960, 543);
+			this.tbTimeDelay.Name = "tbTimeDelay";
+			this.tbTimeDelay.Size = new System.Drawing.Size(89, 20);
+			this.tbTimeDelay.TabIndex = 14;
+			// 
+			// btnSetTimeDelay
+			// 
+			this.btnSetTimeDelay.Location = new System.Drawing.Point(1080, 540);
+			this.btnSetTimeDelay.Name = "btnSetTimeDelay";
+			this.btnSetTimeDelay.Size = new System.Drawing.Size(107, 23);
+			this.btnSetTimeDelay.TabIndex = 15;
+			this.btnSetTimeDelay.Text = "Set Time Delay";
+			this.btnSetTimeDelay.UseVisualStyleBackColor = true;
+			this.btnSetTimeDelay.Click += new System.EventHandler(this.btnSetTimeDelay_Click);
+			// 
+			// timer2
+			// 
+			this.timer2.Interval = 700;
+			this.timer2.Tick += new System.EventHandler(this.timer2_int);
+			// 
+			// run_label
+			// 
+			this.run_label.AutoSize = true;
+			this.run_label.Location = new System.Drawing.Point(511, 546);
+			this.run_label.Name = "run_label";
+			this.run_label.Size = new System.Drawing.Size(22, 13);
+			this.run_label.TabIndex = 16;
+			this.run_label.Text = "run";
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1557, 574);
+			this.Controls.Add(this.run_label);
+			this.Controls.Add(this.btnSetTimeDelay);
+			this.Controls.Add(this.tbTimeDelay);
+			this.Controls.Add(this.tbDirectory);
+			this.Controls.Add(this.btnSetDirectory);
 			this.Controls.Add(this.btnStopTimer);
 			this.Controls.Add(this.btnStartTimer);
 			this.Controls.Add(this.tbStatus);
@@ -307,6 +367,12 @@
 		private System.Windows.Forms.TextBox tbStatus;
 		private System.Windows.Forms.Button btnStartTimer;
 		private System.Windows.Forms.Button btnStopTimer;
+		private System.Windows.Forms.Button btnSetDirectory;
+		private System.Windows.Forms.TextBox tbDirectory;
+		private System.Windows.Forms.TextBox tbTimeDelay;
+		private System.Windows.Forms.Button btnSetTimeDelay;
+		private System.Windows.Forms.Timer timer2;
+		private System.Windows.Forms.Label run_label;
 	}
 }
 
