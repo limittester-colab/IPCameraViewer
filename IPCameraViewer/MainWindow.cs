@@ -13,6 +13,13 @@ namespace IPCameraViewer
     {
         bool IsRecording1;
         bool IsRecording2;
+
+        private int hour;
+        private int minute;
+        private int second;
+        private int day, month;
+		private DateTime now;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -231,16 +238,24 @@ namespace IPCameraViewer
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
-            tbStatus.Text = interval.ToString();
+			
+			now = DateTime.Now;
+			hour = now.Hour;
+			minute = now.Minute;
+			second = now.Second;
+            day = now.Day;
+            month = now.Month;
+			string str = String.Format("{0,-2}-{1,-2}-{2,-2}-{3,-2}-{4,-2}",month,day,hour,minute,second);
+            tbStatus.Text = str;
 			VLCPlayer.Stop();
-			string path1 = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
+			string path1 = $@"f:\\Recordings\\Video1_" + str + ".mp4";
 			var mediaOptions1 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path1 + "\"}" };
 			VLCPlayer.SetMedia(new Uri(input_RTSP.Text), mediaOptions1);
 			VLCPlayer.Play();
 			IsRecording1 = true;
 
 			VLCPlayer2.Stop();
-			string path2 = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
+			string path2 = $@"f:\\Recordings\\Video2_" + str + ".mp4";
 			var mediaOptions2 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path2 + "\"}" };
 			VLCPlayer2.SetMedia(new Uri(inputRTSP2.Text), mediaOptions2);
 			VLCPlayer2.Play();
@@ -254,23 +269,9 @@ namespace IPCameraViewer
             btnRecord2.Enabled = false;
             button_VideoRecording.Enabled = false;
             timer1.Enabled = true;
-            tbStatus.Text = "start";
 			button_Connect.Enabled = false;
 			btnConnect2.Enabled = false;
-
-            VLCPlayer.Stop();
-			string path1 = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
-			var mediaOptions1 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path1 + "\"}" };
-			VLCPlayer.SetMedia(new Uri(input_RTSP.Text), mediaOptions1);
-			VLCPlayer.Play();
-			IsRecording1 = true;
-
-			VLCPlayer2.Stop();
-			string path2 = $@"c:\\Users\\Daniel\\Recordings\\Video1_{interval++}.mp4";
-			var mediaOptions2 = new[] { ":sout=#duplicate{dst=display,dst=std{access=file,mux=mp4,dst=\"" + path2 + "\"}" };
-			VLCPlayer2.SetMedia(new Uri(inputRTSP2.Text), mediaOptions2);
-			VLCPlayer2.Play();
-			IsRecording2 = true;
+			timer1_Tick(new object(), new EventArgs());
 /*
 			btnConnect2_Click(new object(), new EventArgs());
             button_VideoRecording_Click(new object(), new EventArgs());
@@ -284,7 +285,6 @@ namespace IPCameraViewer
 			btnStartTimer.Enabled = true;
 			btnStopTimer.Enabled = false;
 			timer1.Enabled = false;
-			tbStatus.Text = "stop";
 			VLCPlayer2.Stop();
 			VLCPlayer.Stop();
 			IsRecording1 = false;
