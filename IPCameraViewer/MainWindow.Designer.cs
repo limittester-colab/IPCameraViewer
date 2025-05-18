@@ -294,7 +294,7 @@
 			// 
 			// timer2
 			// 
-			this.timer2.Interval = 700;
+			this.timer2.Interval = 500;
 			this.timer2.Tick += new System.EventHandler(this.timer2_int);
 			// 
 			// run_label
@@ -304,7 +304,7 @@
 			this.run_label.Name = "run_label";
 			this.run_label.Size = new System.Drawing.Size(22, 13);
 			this.run_label.TabIndex = 16;
-			this.run_label.Text = "run";
+			this.run_label.Text = "recording";
 			// 
 			// MainWindow
 			// 

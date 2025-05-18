@@ -266,6 +266,8 @@ namespace IPCameraViewer
 			btnStartTimer.Enabled = false;
 			btnStopTimer.Enabled = true;
             btnRecord2.Enabled = false;
+			btn_SnapShot2.Enabled = false;
+			button_TakeSnapshot.Enabled = false;
             button_VideoRecording.Enabled = false;
             timer1.Enabled = true;
 			button_Connect.Enabled = false;
@@ -307,6 +309,8 @@ namespace IPCameraViewer
 		{
 			btnStartTimer.Enabled = true;
 			btnStopTimer.Enabled = false;
+			btn_SnapShot2.Enabled = true;;
+			button_TakeSnapshot.Enabled = true;
 			timer1.Enabled = false;
 			VLCPlayer2.Stop();
 			VLCPlayer.Stop();

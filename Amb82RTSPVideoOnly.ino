@@ -41,7 +41,7 @@ void setup() {
 
     // Configure camera video channel with video format information
     // Adjust the bitrate based on your WiFi network quality
-    //config.setBitrate(2 * 1024 * 1024);     // Recommend to use 2Mbps for RTSP streaming to prevent network congestion
+    config.setBitrate(2 * 1024 * 1024);     // Recommend to use 2Mbps for RTSP streaming to prevent network congestion
     Camera.configVideoChannel(CHANNEL, config);
     Camera.videoInit();
 
